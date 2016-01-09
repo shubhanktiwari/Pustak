@@ -2,6 +2,7 @@ package projects.mobiinfant.pustak.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -28,11 +29,11 @@ public class PustakAdapter extends BaseAdapter {
 
   private int repeatCount = 1;
 
-  private List<CommonMethods.Data> travelData;
+  private List<DataModel> travelData;
 
   public PustakAdapter(Context context) {
     inflater = LayoutInflater.from(context);
-    travelData = new ArrayList<CommonMethods.Data>(CommonMethods.IMG_DESCRIPTIONS);
+    travelData = new ArrayList<DataModel>(CommonMethods.IMG_DESCRIPTIONS);
   }
 
   @Override
@@ -66,21 +67,25 @@ public class PustakAdapter extends BaseAdapter {
       AphidLog.d("created new view from adapter: %d", position);
     }
 
-    final CommonMethods.Data data = travelData.get(position % travelData.size());
+    final DataModel data = travelData.get(position % travelData.size());
 
-    UI
+  /*  UI
         .<TextView>findViewById(layout, R.id.title)
-        .setText(AphidLog.format("%d. %s", position, data.title));
-
-    UI
-        .<ImageView>findViewById(layout, R.id.photo)
-        .setImageBitmap(IO.readBitmap(inflater.getContext().getAssets(), data.imageFilename));
-
+        .setText(AphidLog.format("%d. %s", position, position+""));
+*/
+      if(data.getImagPath() !=null && data.getImagPath().length() > 0) {
+          UI
+                  .<ImageView>findViewById(layout, R.id.photo)
+                  .setImageBitmap(IO.readBitmap(inflater.getContext().getAssets(), data.getImagPath()));
+      }else{
+          UI
+                  .<ImageView>findViewById(layout, R.id.photo).setVisibility(ImageView.GONE);
+      }
     UI
         .<TextView>findViewById(layout, R.id.description)
-        .setText(Html.fromHtml(data.description));
+        .setText(Html.fromHtml(data.getDescriptionStr()));
 
-    UI
+    /*UI
         .<Button>findViewById(layout, R.id.wikipedia)
         .setOnClickListener(new View.OnClickListener() {
           @Override
@@ -92,6 +97,7 @@ public class PustakAdapter extends BaseAdapter {
             inflater.getContext().startActivity(intent);
           }
         });
+*/
 
     return layout;
   }
