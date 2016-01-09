@@ -20,19 +20,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import projects.mobiinfant.pustak.R;
-import projects.mobiinfant.pustak.data.Travels;
+import projects.mobiinfant.pustak.data.CommonMethods;
 
-public class TravelAdapter extends BaseAdapter {
+public class PustakAdapter extends BaseAdapter {
 
   private LayoutInflater inflater;
 
   private int repeatCount = 1;
 
-  private List<Travels.Data> travelData;
+  private List<CommonMethods.Data> travelData;
 
-  public TravelAdapter(Context context) {
+  public PustakAdapter(Context context) {
     inflater = LayoutInflater.from(context);
-    travelData = new ArrayList<Travels.Data>(Travels.IMG_DESCRIPTIONS);
+    travelData = new ArrayList<CommonMethods.Data>(CommonMethods.IMG_DESCRIPTIONS);
   }
 
   @Override
@@ -66,7 +66,7 @@ public class TravelAdapter extends BaseAdapter {
       AphidLog.d("created new view from adapter: %d", position);
     }
 
-    final Travels.Data data = travelData.get(position % travelData.size());
+    final CommonMethods.Data data = travelData.get(position % travelData.size());
 
     UI
         .<TextView>findViewById(layout, R.id.title)
