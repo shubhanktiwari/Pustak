@@ -6,17 +6,25 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.Voice;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.aphidmobile.flip.FlipViewController;
 
+import java.util.Locale;
+
+import projects.mobiinfant.pustak.R;
 import projects.mobiinfant.pustak.adapter.PustakAdapter;
 import projects.mobiinfant.pustak.data.CommonMethods;
 
 public class FlipHorizontalLayoutActivity extends Activity {
 
   private FlipViewController flipView;
+  private TextToSpeech textToSpeech;
+  public LinearLayout linearLayoutContent;
 
   /**
    * Called when the activity is first created.
@@ -26,7 +34,10 @@ public class FlipHorizontalLayoutActivity extends Activity {
     super.onCreate(savedInstanceState);
 
     setTitle("PUSTAK");
+    setContentView(R.layout.main_activity);
+    linearLayoutContent = (LinearLayout) findViewById(R.id.content_id);
     new UpdatePage().execute("");
+
   }
 
   @Override
@@ -35,6 +46,8 @@ public class FlipHorizontalLayoutActivity extends Activity {
     if(flipView !=null)
     flipView.onResume();
     hideNavBar();
+
+
   }
 
   @Override
@@ -53,9 +66,10 @@ public class FlipHorizontalLayoutActivity extends Activity {
       flipView = new FlipViewController(FlipHorizontalLayoutActivity.this, FlipViewController.HORIZONTAL);
 
       flipView.setAdapter(new PustakAdapter(FlipHorizontalLayoutActivity.this));
-
-      FlipHorizontalLayoutActivity.this.setContentView(flipView);
-
+      linearLayoutContent.addView(flipView);
+     // FlipHorizontalLayoutActivity.this.setContentView(flipView);
+      speakText();
+      setFlipsListner();
     }
   }
   private void hideNavBar() {
@@ -69,4 +83,23 @@ public class FlipHorizontalLayoutActivity extends Activity {
               | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
   }
+  private void setFlipsListner(){
+    flipView.setOnViewFlipListener(new FlipViewController.ViewFlipListener() {
+      @Override
+      public void onViewFlipped(View view, int position) {
+        textToSpeech.speak(CommonMethods.IMG_DESCRIPTIONS.get(position).getDescriptionStr(), TextToSpeech.QUEUE_FLUSH, null);
+      }
+    });
+  }
+  private void speakText(){
+    textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+      @Override
+      public void onInit(int status) {
+        if(status != TextToSpeech.ERROR) {
+          textToSpeech.setLanguage(new Locale("hin-IND"));
+        }
+      }
+    });
+  }
+
 }
