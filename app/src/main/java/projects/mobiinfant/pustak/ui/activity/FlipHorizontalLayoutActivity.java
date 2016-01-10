@@ -3,11 +3,13 @@
 package projects.mobiinfant.pustak.ui.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.Voice;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -126,10 +128,26 @@ public class FlipHorizontalLayoutActivity extends Activity {
       @Override
       public void onInit(int status) {
         if(status != TextToSpeech.ERROR) {
-          textToSpeech.setLanguage(new Locale("hin-IND"));
+         int result = textToSpeech.setLanguage(new Locale("hin-IND"));
+          if (result == TextToSpeech.LANG_MISSING_DATA
+                  || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+            Intent installIntent = new Intent();
+            installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+            startActivity(installIntent);
+            Log.e("TTS", "This Language is not supported");
+          }
         }
       }
     });
+  }
+  @Override
+  public void onDestroy() {
+    // Don't forget to shutdown tts!
+    if (textToSpeech != null) {
+      textToSpeech.stop();
+      textToSpeech.shutdown();
+    }
+    super.onDestroy();
   }
 
 }
