@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.speech.tts.Voice;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -15,10 +16,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aphidmobile.flip.FlipViewController;
 
+import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Set;
 
 import projects.mobiinfant.pustak.R;
 import projects.mobiinfant.pustak.adapter.PustakAdapter;
@@ -130,15 +134,22 @@ public class FlipHorizontalLayoutActivity extends Activity {
         if(status != TextToSpeech.ERROR) {
          int result = textToSpeech.setLanguage(new Locale("hin-IND"));
           if (result == TextToSpeech.LANG_MISSING_DATA
-                  || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-            Intent installIntent = new Intent();
-            installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
-            startActivity(installIntent);
+                  || result == TextToSpeech.LANG_NOT_SUPPORTED ) {
+            Toast.makeText(FlipHorizontalLayoutActivity.this,"Hindi language is not updated, please update hindi language.",Toast.LENGTH_LONG).show();
+            Intent installTTSIntent = new Intent();
+            installTTSIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+            ArrayList<String> languages = new ArrayList<String>();
+            languages.add("hin-IND"); // hin - hindi, IND - INDIA
+            installTTSIntent.putStringArrayListExtra(
+                    TextToSpeech.Engine.EXTRA_CHECK_VOICE_DATA_FOR, languages);
+            startActivity(installTTSIntent);
             Log.e("TTS", "This Language is not supported");
           }
         }
+
       }
     });
+
   }
   @Override
   public void onDestroy() {
