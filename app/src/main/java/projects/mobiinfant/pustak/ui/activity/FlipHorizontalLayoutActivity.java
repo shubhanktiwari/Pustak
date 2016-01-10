@@ -10,6 +10,7 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.Voice;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.aphidmobile.flip.FlipViewController;
@@ -25,6 +26,9 @@ public class FlipHorizontalLayoutActivity extends Activity {
   private FlipViewController flipView;
   private TextToSpeech textToSpeech;
   public LinearLayout linearLayoutContent;
+  private ImageView imageViewSound;
+  private int postionIndex = 0;
+  private boolean isSoundActive = false;
 
   /**
    * Called when the activity is first created.
@@ -36,7 +40,23 @@ public class FlipHorizontalLayoutActivity extends Activity {
     setTitle("PUSTAK");
     setContentView(R.layout.main_activity);
     linearLayoutContent = (LinearLayout) findViewById(R.id.content_id);
+    imageViewSound = (ImageView)findViewById(R.id.sound_id);
     new UpdatePage().execute("");
+    imageViewSound.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (isSoundActive) {
+          isSoundActive = false;
+        } else {
+          isSoundActive = true;
+        }
+        if (isSoundActive) {
+          textToSpeech.speak(CommonMethods.IMG_DESCRIPTIONS.get(postionIndex).getDescriptionStr(), TextToSpeech.QUEUE_FLUSH, null);
+        } else {
+          textToSpeech.stop();
+        }
+      }
+    });
 
   }
 
@@ -87,7 +107,13 @@ public class FlipHorizontalLayoutActivity extends Activity {
     flipView.setOnViewFlipListener(new FlipViewController.ViewFlipListener() {
       @Override
       public void onViewFlipped(View view, int position) {
-        textToSpeech.speak(CommonMethods.IMG_DESCRIPTIONS.get(position).getDescriptionStr(), TextToSpeech.QUEUE_FLUSH, null);
+        if(textToSpeech.isSpeaking()){
+          textToSpeech.stop();
+        }
+        if(isSoundActive) {
+          textToSpeech.speak(CommonMethods.IMG_DESCRIPTIONS.get(position).getDescriptionStr(), TextToSpeech.QUEUE_FLUSH, null);
+        }
+        postionIndex = position;
       }
     });
   }

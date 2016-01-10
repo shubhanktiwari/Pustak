@@ -5,20 +5,11 @@
  },
   "page1":{
      "imagPath":"",
-     "descriptionStr":"qeqweqweqewqeqweqweqewqeqweqweqewqeqweqweqewqeqweqweqewqeqweqweqewqeqweqw
-     eqewqeqweqweqewqeqweqweqewqeqweqweqewqeqweqweqewqeqweqweqew eqweqweqewqeqweqweqewqeqweqweqew
-     eqweqweqewqeqweqweqewqeqweqweqew eqweqweqewqeqweqweqewqeqweqweqew eqweqweqewqeqweqweqewqeqweqweqew
-      eqweqweqewqeqweqweqewqeqweqweqew eqweqweqewqeqweqweqewqeqweqweqew eqweqweqewqeqweqweqewqeqweqweqew eqweqweqewqeqweqweqewqeqweqweqew
-     eqweqweqewqeqweqweqewqeqweqweqew eqweqweqewqeqweqweqewqeqweqweqew eqweqweqewqeqweqweqewqeqweqweqew
-     eqweqweqewqeqweqweqewqeqweqweqew eqweqweqewqeqweqweqewqeqweqweqew eqweqweqewqeqweqweqewqeqweqweqew
-     eqweqweqewqeqweqweqewqeqweqweqew eqweqweqewqeqweqweqewqeqweqweqew eqweqweqewqeqweqweqewqeqweqweqew
-     eqweqweqewqeqweqweqewqeqweqweqew eqweqweqewqeqweqweqewqeqweqweqew eqweqweqewqeqweqweqewqeqweqweqew
-     eqweqweqewqeqweqweqewqeqweqweqew eqweqweqewqeqweqweqewqeqweqweqew eqweqweqewqeqweqweqewqeqweqweqew
-     eqweqweqewqeqweqweqewqeqweqweqew eqweqweqewqeqweqweqewqeqweqweqew eqweqweqewqeqweqweqewqeqweqweqew
+     "descriptionStr":"पहले पृथ्वी के देवता ब्राह्मणों के चरणों की वन्दना करता हूँ, जो अज्ञान से उत्पन्न सब संदेहों को हरने वाले हैं। फिर सब गुणों की खान संत समाज को प्रेम सहित सुंदर वाणी से प्रणाम करता हूँ
     "
  },
   "page2":{
      "imagPath":"",
-     "descriptionStr":"qweqwrqrqr"
+     "descriptionStr":"संतों का चरित्र कपास के चरित्र (जीवन) के समान शुभ है, जिसका फल नीरस, विशद और गुणमय होता है। (कपास की डोडी नीरस होती है, संत चरित्र में भी विषयासक्ति नहीं है, इससे वह भी नीरस है, कपास उज्ज्वल होता है, संत का हृदय भी अज्ञान और पाप रूपी अन्धकार से रहित होता है, इसलिए वह विशद है और कपास में गुण (तंतु) होते हैं, इसी प्रकार संत का चरित्र भी सद्गुणों का भंडार होता है, इसलिए वह गुणमय है।) (जैसे कपास का धागा सुई के किए हुए छेद को अपना तन देकर ढँक देता है, अथवा कपास जैसे लोढ़े जाने, काते जाने और बुने जाने का कष्ट सहकर भी वस्त्र के रूप में परिणत होकर दूसरों के गोपनीय स्थानों को ढँकता है, उसी प्रकार) संत स्वयं दुःख सहकर दूसरों के छिद्रों (दोषों) को ढँकता है, जिसके कारण उसने जगत में वंदनीय यश प्राप्त किया है"
  }
 }

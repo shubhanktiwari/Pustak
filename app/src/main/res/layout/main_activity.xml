@@ -7,19 +7,19 @@
         android:id="@+id/header_id"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:layout_weight="0.07"
+        android:layout_gravity="right"
+        android:gravity="right"
         android:background="@android:color/white"
-        android:layout_height="0dp">
-        <Button
+        android:layout_height="35dp">
+        <ImageView
             android:id="@+id/sound_id"
-            android:layout_width="0dp"
-            android:layout_weight="0.50"
+            android:layout_width="32dp"
+            android:layout_marginRight="5dp"
             android:text="Sound"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_height="match_parent" />
+            android:src="@android:drawable/ic_btn_speak_now"
+            android:layout_gravity="right|center"
+            android:gravity="right|center"
+            android:layout_height="32dp" />
 
     </LinearLayout>
     <LinearLayout
@@ -27,7 +27,6 @@
         android:layout_width="match_parent"
         android:background="@android:color/white"
         android:orientation="vertical"
-        android:layout_weight="0.93"
-       android:layout_height="0dp"></LinearLayout>
+       android:layout_height="match_parent"></LinearLayout>
 
 </LinearLayout>
