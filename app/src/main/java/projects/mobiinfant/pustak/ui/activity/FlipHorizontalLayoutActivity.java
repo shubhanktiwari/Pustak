@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.aphidmobile.flip.FlipViewController;
 
@@ -29,6 +30,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
   private ImageView imageViewSound;
   private int postionIndex = 0;
   private boolean isSoundActive = false;
+  private TextView textViewPageNumber;
 
   /**
    * Called when the activity is first created.
@@ -41,6 +43,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
     setContentView(R.layout.main_activity);
     linearLayoutContent = (LinearLayout) findViewById(R.id.content_id);
     imageViewSound = (ImageView)findViewById(R.id.sound_id);
+    textViewPageNumber =(TextView)findViewById(R.id.page_number_id);
     new UpdatePage().execute("");
     imageViewSound.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -87,7 +90,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
 
       flipView.setAdapter(new PustakAdapter(FlipHorizontalLayoutActivity.this));
       linearLayoutContent.addView(flipView);
-     // FlipHorizontalLayoutActivity.this.setContentView(flipView);
+     textViewPageNumber.setText("Page:"+(postionIndex+1)+"/"+CommonMethods.IMG_DESCRIPTIONS.size());
       speakText();
       setFlipsListner();
     }
@@ -114,6 +117,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
           textToSpeech.speak(CommonMethods.IMG_DESCRIPTIONS.get(position).getDescriptionStr(), TextToSpeech.QUEUE_FLUSH, null);
         }
         postionIndex = position;
+        textViewPageNumber.setText("Page:"+(postionIndex+1)+"/"+CommonMethods.IMG_DESCRIPTIONS.size());
       }
     });
   }

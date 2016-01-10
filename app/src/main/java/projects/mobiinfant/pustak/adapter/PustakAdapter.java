@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.media.Image;
 import android.net.Uri;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aphidmobile.utils.AphidLog;
@@ -84,20 +86,13 @@ public class PustakAdapter extends BaseAdapter {
     UI
         .<TextView>findViewById(layout, R.id.description)
         .setText(Html.fromHtml(data.getDescriptionStr()));
+     if(data.isTitle()){
+          UI.<TextView>findViewById(layout, R.id.description).setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+          UI.<TextView>findViewById(layout, R.id.description).setGravity(Gravity.CENTER);
+          UI.<TextView>findViewById(layout, R.id.description).setTextSize(20);
+      }
 
-    /*UI
-        .<Button>findViewById(layout, R.id.wikipedia)
-        .setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            Intent intent = new Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(data.link)
-            );
-            inflater.getContext().startActivity(intent);
-          }
-        });
-*/
+
 
     return layout;
   }

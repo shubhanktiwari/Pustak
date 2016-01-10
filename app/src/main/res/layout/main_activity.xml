@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="@android:color/white"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:id="@+id/header_id"
         android:layout_width="match_parent"
@@ -11,6 +12,14 @@
         android:gravity="right"
         android:background="@android:color/white"
         android:layout_height="35dp">
+        <TextView
+            android:id="@+id/page_number_id"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="right|center"
+            android:gravity="right|center"
+            android:layout_height="32dp"
+            />
         <ImageView
             android:id="@+id/sound_id"
             android:layout_width="32dp"

@@ -7,6 +7,7 @@ public class DataModel {
 
     private String imagPath;
     private String descriptionStr;
+    private boolean isTitle ;
 
     public String getImagPath() {
         return imagPath;
@@ -22,5 +23,13 @@ public class DataModel {
 
     public void setDescriptionStr(String descriptionStr) {
         this.descriptionStr = descriptionStr;
+    }
+
+    public boolean isTitle() {
+        return isTitle;
+    }
+
+    public void setIsTitle(boolean isTitle) {
+        this.isTitle = isTitle;
     }
 }

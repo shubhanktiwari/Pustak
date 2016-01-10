@@ -3,6 +3,7 @@ package projects.mobiinfant.pustak.data;
 import android.content.Context;
 import android.content.res.AssetManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,11 +47,17 @@ public class CommonMethods {
         DataModel dataModel;
         try {
             json = new JSONObject(getJSONString(context));
-            for (int i=0; i<json.length();i++){
-                JSONObject jsonObjectTemp = json.getJSONObject("page"+i);
+            JSONArray jsonArray = json.getJSONArray("page");
+            for (int i=0; i<jsonArray.length();i++){
+                JSONObject jsonObjectTemp = jsonArray.getJSONObject(i);
                 dataModel = new DataModel();
                 dataModel.setDescriptionStr(jsonObjectTemp.getString("descriptionStr"));
                 dataModel.setImagPath(jsonObjectTemp.getString("imagPath"));
+                if(jsonObjectTemp.has("isTitle") && jsonObjectTemp.getBoolean("isTitle")){
+                    dataModel.setIsTitle(true);
+                }else {
+                    dataModel.setIsTitle(false);
+                }
                 IMG_DESCRIPTIONS.add(dataModel);
             }
         } catch (JSONException e) {
