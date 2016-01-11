@@ -9,6 +9,7 @@ public class DataModel {
     private String descriptionStr;
     private boolean isTitle ;
     private String title;
+    private int indexPostion;
 
     public String getImagPath() {
         return imagPath;
@@ -42,8 +43,11 @@ public class DataModel {
         this.title = title;
     }
 
-    @Override
-    public String toString() {
-        return this.title;
+    public int getIndexPostion() {
+        return indexPostion;
+    }
+
+    public void setIndexPostion(int indexPostion) {
+        this.indexPostion = indexPostion;
     }
 }

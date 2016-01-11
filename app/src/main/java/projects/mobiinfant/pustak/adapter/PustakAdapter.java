@@ -32,8 +32,10 @@ public class PustakAdapter extends BaseAdapter {
   private int repeatCount = 1;
 
   private List<DataModel> travelData;
+  private Context mContext;
 
   public PustakAdapter(Context context) {
+    this.mContext = context;
     inflater = LayoutInflater.from(context);
     travelData = new ArrayList<DataModel>(CommonMethods.IMG_DESCRIPTIONS);
   }
@@ -64,16 +66,12 @@ public class PustakAdapter extends BaseAdapter {
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
     View layout = convertView;
-    if (convertView == null) {
       layout = inflater.inflate(R.layout.complex1, null);
-      AphidLog.d("created new view from adapter: %d", position);
-    }
 
     final DataModel data = travelData.get(position % travelData.size());
 
       if(data.getImagPath() !=null && data.getImagPath().length() > 0) {
-          UI.<ImageView>findViewById(layout, R.id.photo)
-            .setImageBitmap(IO.readBitmap(inflater.getContext().getAssets(), data.getImagPath()));
+          UI.<ImageView>findViewById(layout, R.id.photo).setImageResource(CommonMethods.getDrawable(mContext,data.getImagPath()));
       }else{
           UI.<ImageView>findViewById(layout, R.id.photo).setVisibility(ImageView.GONE);
       }

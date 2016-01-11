@@ -3,6 +3,8 @@ package projects.mobiinfant.pustak.data;
 import android.content.Context;
 import android.content.res.AssetManager;
 
+import junit.framework.Assert;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,15 +59,25 @@ public class CommonMethods {
                 if(jsonObjectTemp.has("isTitle") && jsonObjectTemp.getBoolean("isTitle")){
                     dataModel.setIsTitle(true);
                     dataModel.setTitle(jsonObjectTemp.getString("title"));
+                    dataModel.setIndexPostion(i);
                     INDEX_EPISODE.add(dataModel);
                 }else {
                     dataModel.setIsTitle(false);
+                    dataModel.setIndexPostion(i);
                 }
                 IMG_DESCRIPTIONS.add(dataModel);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+    public static int getDrawable(Context context, String name)
+    {
+        Assert.assertNotNull(context);
+        Assert.assertNotNull(name);
+
+        return context.getResources().getIdentifier(name,
+                "drawable", context.getPackageName());
     }
 
 }

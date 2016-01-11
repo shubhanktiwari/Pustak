@@ -42,6 +42,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
   private boolean isSoundActive = false;
   private TextView textViewPageNumber;
   private Spinner episode_spinner;
+  private  PustakAdapter pustakAdapter;
 
   /**
    * Called when the activity is first created.
@@ -56,6 +57,18 @@ public class FlipHorizontalLayoutActivity extends Activity {
     imageViewSound = (ImageView)findViewById(R.id.sound_id);
     textViewPageNumber =(TextView)findViewById(R.id.page_number_id);
     episode_spinner = (Spinner)findViewById(R.id.episode_spinner_id);
+    episode_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+      @Override
+      public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+       flipView.setSelection(CommonMethods.INDEX_EPISODE.get(position).getIndexPostion());
+      }
+
+      @Override
+      public void onNothingSelected(AdapterView<?> parentView) {
+        // your code here
+      }
+
+    });
     new UpdatePage().execute("");
     imageViewSound.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -85,6 +98,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
     episode_spinner.setAdapter(dataAdapter);
 
 
+
   }
 
   @Override
@@ -111,8 +125,8 @@ public class FlipHorizontalLayoutActivity extends Activity {
     }
     protected void onPostExecute(String result) {
       flipView = new FlipViewController(FlipHorizontalLayoutActivity.this, FlipViewController.HORIZONTAL);
-
-      flipView.setAdapter(new PustakAdapter(FlipHorizontalLayoutActivity.this));
+      pustakAdapter = new PustakAdapter(FlipHorizontalLayoutActivity.this);
+      flipView.setAdapter(pustakAdapter);
       linearLayoutContent.addView(flipView);
       textViewPageNumber.setText("Page:" + (postionIndex + 1) + "/" + CommonMethods.IMG_DESCRIPTIONS.size());
       speakText();
