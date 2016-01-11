@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@android:color/white"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -42,8 +42,17 @@
     <LinearLayout
         android:id="@+id/content_id"
         android:layout_width="match_parent"
-        android:background="@android:color/white"
         android:orientation="vertical"
-       android:layout_height="match_parent"></LinearLayout>
+       android:layout_height="match_parent"
+        android:layout_below="@id/header_id"
+        android:layout_above="@+id/footer_id"></LinearLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/footer_id"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:background="@drawable/bg_action"
+        android:layout_height="10dp"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>
