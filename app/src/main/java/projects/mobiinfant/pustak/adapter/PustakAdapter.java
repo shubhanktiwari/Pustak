@@ -78,7 +78,7 @@ public class PustakAdapter extends BaseAdapter {
 
      if(data.isTitle()){
           UI.<TextView>findViewById(layout, R.id.description)
-           .setText(Html.fromHtml(data.getTitle()));
+           .setText(Html.fromHtml("<b>"+data.getTitle()+"</b>"+"<br>"+data.getDescriptionStr()));
           UI.<TextView>findViewById(layout, R.id.description).setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
           UI.<TextView>findViewById(layout, R.id.description).setGravity(Gravity.CENTER);
           UI.<TextView>findViewById(layout, R.id.description).setTextSize(30);
