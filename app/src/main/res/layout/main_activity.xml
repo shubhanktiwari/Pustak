@@ -11,10 +11,18 @@
         android:layout_gravity="right"
         android:gravity="right"
         android:background="@drawable/bg_action"
-        android:layout_height="30dp">
+        android:layout_height="40dp">
+        <Spinner
+            android:id="@+id/episode_spinner_id"
+            android:layout_width="0dp"
+            android:layout_weight="0.70"
+            android:layout_gravity="right|center"
+            android:gravity="right|center"
+            android:layout_height="38dp"></Spinner>
         <TextView
             android:id="@+id/page_number_id"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.15"
             android:layout_marginRight="5dp"
             android:layout_gravity="right|center"
             android:gravity="right|center"

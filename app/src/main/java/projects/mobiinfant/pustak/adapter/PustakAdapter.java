@@ -71,26 +71,23 @@ public class PustakAdapter extends BaseAdapter {
 
     final DataModel data = travelData.get(position % travelData.size());
 
-  /*  UI
-        .<TextView>findViewById(layout, R.id.title)
-        .setText(AphidLog.format("%d. %s", position, position+""));
-*/
       if(data.getImagPath() !=null && data.getImagPath().length() > 0) {
-          UI
-                  .<ImageView>findViewById(layout, R.id.photo)
-                  .setImageBitmap(IO.readBitmap(inflater.getContext().getAssets(), data.getImagPath()));
+          UI.<ImageView>findViewById(layout, R.id.photo)
+            .setImageBitmap(IO.readBitmap(inflater.getContext().getAssets(), data.getImagPath()));
       }else{
-          UI
-                  .<ImageView>findViewById(layout, R.id.photo).setVisibility(ImageView.GONE);
+          UI.<ImageView>findViewById(layout, R.id.photo).setVisibility(ImageView.GONE);
       }
-    UI
-        .<TextView>findViewById(layout, R.id.description)
-        .setText(Html.fromHtml(data.getDescriptionStr()));
+
      if(data.isTitle()){
+          UI.<TextView>findViewById(layout, R.id.description)
+           .setText(Html.fromHtml(data.getTitle()));
           UI.<TextView>findViewById(layout, R.id.description).setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
           UI.<TextView>findViewById(layout, R.id.description).setGravity(Gravity.CENTER);
-          UI.<TextView>findViewById(layout, R.id.description).setTextSize(20);
-      }
+          UI.<TextView>findViewById(layout, R.id.description).setTextSize(30);
+      }else{
+         UI.<TextView>findViewById(layout, R.id.description)
+           .setText(Html.fromHtml(data.getDescriptionStr()));
+     }
 
 
 

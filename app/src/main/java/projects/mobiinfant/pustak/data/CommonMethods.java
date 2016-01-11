@@ -17,6 +17,7 @@ import projects.mobiinfant.pustak.adapter.DataModel;
 public class CommonMethods {
 
   public static  List<DataModel> IMG_DESCRIPTIONS = new ArrayList<DataModel>();
+    public static  List<DataModel> INDEX_EPISODE = new ArrayList<DataModel>();
 
     private static String getJSONString(Context context)
     {
@@ -55,6 +56,8 @@ public class CommonMethods {
                 dataModel.setImagPath(jsonObjectTemp.getString("imagPath"));
                 if(jsonObjectTemp.has("isTitle") && jsonObjectTemp.getBoolean("isTitle")){
                     dataModel.setIsTitle(true);
+                    dataModel.setTitle(jsonObjectTemp.getString("title"));
+                    INDEX_EPISODE.add(dataModel);
                 }else {
                     dataModel.setIsTitle(false);
                 }

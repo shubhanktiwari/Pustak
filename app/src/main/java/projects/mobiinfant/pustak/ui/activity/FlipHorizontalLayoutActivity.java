@@ -13,14 +13,18 @@ import android.speech.tts.Voice;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aphidmobile.flip.FlipViewController;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -37,6 +41,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
   private int postionIndex = 0;
   private boolean isSoundActive = false;
   private TextView textViewPageNumber;
+  private Spinner episode_spinner;
 
   /**
    * Called when the activity is first created.
@@ -50,6 +55,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
     linearLayoutContent = (LinearLayout) findViewById(R.id.content_id);
     imageViewSound = (ImageView)findViewById(R.id.sound_id);
     textViewPageNumber =(TextView)findViewById(R.id.page_number_id);
+    episode_spinner = (Spinner)findViewById(R.id.episode_spinner_id);
     new UpdatePage().execute("");
     imageViewSound.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -66,6 +72,18 @@ public class FlipHorizontalLayoutActivity extends Activity {
         }
       }
     });
+
+  }
+
+  private void setSpinner(){
+    List<String> categories = new ArrayList<String>();
+    for (int i=0;i< CommonMethods.INDEX_EPISODE.size(); i++){
+      categories.add(CommonMethods.INDEX_EPISODE.get(i).getTitle());
+    }
+    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    episode_spinner.setAdapter(dataAdapter);
+
 
   }
 
@@ -96,9 +114,10 @@ public class FlipHorizontalLayoutActivity extends Activity {
 
       flipView.setAdapter(new PustakAdapter(FlipHorizontalLayoutActivity.this));
       linearLayoutContent.addView(flipView);
-     textViewPageNumber.setText("Page:"+(postionIndex+1)+"/"+CommonMethods.IMG_DESCRIPTIONS.size());
+      textViewPageNumber.setText("Page:" + (postionIndex + 1) + "/" + CommonMethods.IMG_DESCRIPTIONS.size());
       speakText();
       setFlipsListner();
+      setSpinner();
     }
   }
   private void hideNavBar() {

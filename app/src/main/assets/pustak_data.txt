@@ -3,8 +3,9 @@
  [
  {
       "imagPath":"page1.jpg",
-      "descriptionStr":"अध्याय 1",
-      "isTitle":true
+      "descriptionStr":"गोस्वामी तुलसीदासजी कृत महाकाव्य श्रीरामचरितमानस मूल.",
+      "isTitle":true,
+      "title":"अध्याय 1"
   }
   ,
  {
@@ -19,8 +20,9 @@
  },
  {
      "imagPath":"page3.jpg",
-     "descriptionStr":"अध्याय 2",
-     "isTitle":true
+     "descriptionStr":"गोस्वामी तुलसीदासजी कृत महाकाव्य श्रीरामचरितमानस मूल.",
+     "isTitle":true,
+     "title":"अध्याय 2"
  }
  ,
   {
