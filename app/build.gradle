@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "mm3.vod.com.mm3"
+        applicationId "projects.mobiinfant.pustak"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
