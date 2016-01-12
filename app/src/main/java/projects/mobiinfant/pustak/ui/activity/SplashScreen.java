@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import projects.mobiinfant.pustak.R;
+import projects.mobiinfant.pustak.data.CommonMethods;
 
 public class SplashScreen extends Activity {
 
@@ -17,6 +18,7 @@ public class SplashScreen extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        CommonMethods.getScreenInches(this);
         setContentView(R.layout.activity_splash_screen);
             {
                 new Handler().postDelayed(new Runnable() {

@@ -1,9 +1,6 @@
 package projects.mobiinfant.pustak.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.media.Image;
-import android.net.Uri;
 import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
