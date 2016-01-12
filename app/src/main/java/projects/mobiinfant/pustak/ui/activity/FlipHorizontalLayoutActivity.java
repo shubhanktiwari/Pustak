@@ -61,6 +61,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
       @Override
       public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
        flipView.setSelection(CommonMethods.INDEX_EPISODE.get(position).getIndexPostion());
+        onPageChanged(CommonMethods.INDEX_EPISODE.get(position).getIndexPostion());
       }
 
       @Override
@@ -145,18 +146,21 @@ public class FlipHorizontalLayoutActivity extends Activity {
               | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
   }
+  private void onPageChanged(int position){
+    if(textToSpeech.isSpeaking()){
+      textToSpeech.stop();
+    }
+    if(isSoundActive) {
+      textToSpeech.speak(CommonMethods.IMG_DESCRIPTIONS.get(position).getDescriptionStr(), TextToSpeech.QUEUE_FLUSH, null);
+    }
+    postionIndex = position;
+    textViewPageNumber.setText("Page:"+(postionIndex+1)+"/"+CommonMethods.IMG_DESCRIPTIONS.size());
+  }
   private void setFlipsListner(){
     flipView.setOnViewFlipListener(new FlipViewController.ViewFlipListener() {
       @Override
       public void onViewFlipped(View view, int position) {
-        if(textToSpeech.isSpeaking()){
-          textToSpeech.stop();
-        }
-        if(isSoundActive) {
-          textToSpeech.speak(CommonMethods.IMG_DESCRIPTIONS.get(position).getDescriptionStr(), TextToSpeech.QUEUE_FLUSH, null);
-        }
-        postionIndex = position;
-        textViewPageNumber.setText("Page:"+(postionIndex+1)+"/"+CommonMethods.IMG_DESCRIPTIONS.size());
+        onPageChanged(position);
       }
     });
   }
@@ -193,5 +197,6 @@ public class FlipHorizontalLayoutActivity extends Activity {
     }
     super.onDestroy();
   }
+
 
 }
