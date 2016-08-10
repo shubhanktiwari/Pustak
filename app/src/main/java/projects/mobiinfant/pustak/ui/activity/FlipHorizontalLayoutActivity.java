@@ -43,6 +43,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
   private TextView textViewPageNumber;
   private Spinner episode_spinner;
   private  PustakAdapter pustakAdapter;
+  private int episodeIndex= 0;
 
   /**
    * Called when the activity is first created.
@@ -61,6 +62,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
       @Override
       public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
        flipView.setSelection(CommonMethods.INDEX_EPISODE.get(position).getIndexPostion());
+        episodeIndex = position;
       }
 
       @Override
@@ -69,6 +71,8 @@ public class FlipHorizontalLayoutActivity extends Activity {
       }
 
     });
+   // postionIndex= CommonMethods.getIndex(getApplicationContext());
+    episodeIndex = CommonMethods.getEPIndex(getApplicationContext());
     new UpdatePage().execute("");
     imageViewSound.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -97,7 +101,8 @@ public class FlipHorizontalLayoutActivity extends Activity {
     ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
     dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     episode_spinner.setAdapter(dataAdapter);
-
+    episode_spinner.setSelection(episodeIndex);
+   // flipView.setSelection(postionIndex);
 
 
   }
@@ -130,6 +135,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
       flipView.setAdapter(pustakAdapter);
       linearLayoutContent.addView(flipView);
       textViewPageNumber.setText("Page:" + (postionIndex + 1) + "/" + CommonMethods.IMG_DESCRIPTIONS.size());
+      CommonMethods.onSetIndex(getApplicationContext(), postionIndex, episodeIndex);
       speakText();
       setFlipsListner();
       setSpinner();
@@ -159,6 +165,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
         }
         postionIndex = position;
         textViewPageNumber.setText("Page:"+(postionIndex+1)+"/"+CommonMethods.IMG_DESCRIPTIONS.size());
+        CommonMethods.onSetIndex(getApplicationContext(),postionIndex,episodeIndex);
       }
     });
   }
@@ -188,12 +195,13 @@ public class FlipHorizontalLayoutActivity extends Activity {
   }
   @Override
   public void onDestroy() {
+    super.onDestroy();
     // Don't forget to shutdown tts!
     if (textToSpeech != null) {
       textToSpeech.stop();
       textToSpeech.shutdown();
     }
-    super.onDestroy();
+
   }
 
 }

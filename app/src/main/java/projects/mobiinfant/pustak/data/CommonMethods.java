@@ -27,6 +27,8 @@ public class CommonMethods {
 
     public static final String PREFS_NAME = "AOP_PREFS";
     public static final String PREFS_KEY = "AOP_PREFS_String";
+    public static final String PREFS_KEY_INDEX = "AOP_PREFS_Index";
+    public static final String PREFS_KEY_EP_INDEX = "AOP_PREFS_EP_Index";
     public static void onSave(Context context, String text) {
         SharedPreferences settings;
         SharedPreferences.Editor editor;
@@ -41,7 +43,7 @@ public class CommonMethods {
         String text = "";
         try {
             settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE); //1
-            text = settings.getString(PREFS_KEY, null); //2
+            text = settings.getString(PREFS_KEY, ""); //2
         }catch (Exception e){
             System.out.print(e.getMessage());
         }
@@ -132,8 +134,6 @@ public class CommonMethods {
     }
     public static int getDrawable(Context context, String name)
     {
-        Assert.assertNotNull(context);
-        Assert.assertNotNull(name);
 
         return context.getResources().getIdentifier(name,
                 "drawable", context.getPackageName());
@@ -141,10 +141,41 @@ public class CommonMethods {
     public static void getScreenInches(Context context){
         DisplayMetrics dm = new DisplayMetrics();
         ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(dm);
-        double x = Math.pow(dm.widthPixels/dm.xdpi,2);
+        double x = Math.pow(dm.widthPixels / dm.xdpi, 2);
         double y = Math.pow(dm.heightPixels/dm.ydpi,2);
          SCREEN_SIZE_INCHES = Math.sqrt(x+y);
     }
+    public static void onSetIndex(Context context, int intValue,int intEpisode) {
+        SharedPreferences settings;
+        SharedPreferences.Editor editor;
+        settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE); //1
+        editor = settings.edit(); //2
 
+        editor.putInt(PREFS_KEY_INDEX, intValue); //3
+        editor.putInt(PREFS_KEY_EP_INDEX, intEpisode); //3
+        editor.commit(); //4
+    }
+    public static int getIndex(Context context) {
+        SharedPreferences settings;
+        int text =0;
+        try {
+            settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE); //1
+            text = settings.getInt(PREFS_KEY_INDEX, 0); //2
+        }catch (Exception e){
+            System.out.print(e.getMessage());
+        }
+        return text;
+    }
+    public static int getEPIndex(Context context) {
+        SharedPreferences settings;
+        int text =0;
+        try {
+            settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE); //1
+            text = settings.getInt(PREFS_KEY_EP_INDEX, 0); //2
+        }catch (Exception e){
+            System.out.print(e.getMessage());
+        }
+        return text;
+    }
 
 }

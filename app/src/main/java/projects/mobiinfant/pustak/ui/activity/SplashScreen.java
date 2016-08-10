@@ -31,7 +31,7 @@ public class SplashScreen extends Activity {
                         });
                         t.start();
                     }
-                }, 5000);
+                }, 3000);
             }
     }
     private void onLaunchHomeActivity(){
