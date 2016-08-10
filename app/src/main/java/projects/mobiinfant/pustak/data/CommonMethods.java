@@ -2,6 +2,7 @@ package projects.mobiinfant.pustak.data;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.util.DisplayMetrics;
 
@@ -24,26 +25,54 @@ public class CommonMethods {
     public static  List<DataModel> INDEX_EPISODE = new ArrayList<DataModel>();
     public static double SCREEN_SIZE_INCHES = 0;
 
+    public static final String PREFS_NAME = "AOP_PREFS";
+    public static final String PREFS_KEY = "AOP_PREFS_String";
+    public static void onSave(Context context, String text) {
+        SharedPreferences settings;
+        SharedPreferences.Editor editor;
+        settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE); //1
+        editor = settings.edit(); //2
+
+        editor.putString(PREFS_KEY, text); //3
+        editor.commit(); //4
+    }
+    public static String getValue(Context context) {
+        SharedPreferences settings;
+        String text = "";
+        try {
+            settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE); //1
+            text = settings.getString(PREFS_KEY, null); //2
+        }catch (Exception e){
+            System.out.print(e.getMessage());
+        }
+        return text;
+    }
     private static String getJSONString(Context context)
     {
-        String str = "";
-        try
-        {
-            AssetManager assetManager = context.getAssets();
-            InputStream in = assetManager.open("pustak_data.txt");
-            InputStreamReader isr = new InputStreamReader(in);
-            char [] inputBuffer = new char[100];
-
-            int charRead;
-            while((charRead = isr.read(inputBuffer))>0)
-            {
-                String readString = String.copyValueOf(inputBuffer,0,charRead);
-                str += readString;
-            }
+        String str = getValue(context);
+        try {
+            str = str.replaceAll("\\n+", "");
+            str = str.replaceAll("\\t+", "");
+        }catch (Exception e){
+            str="";
         }
-        catch(Exception ioe)
-        {
-            ioe.printStackTrace();
+        if(!(str.length() > 0)) {
+            try {
+                str="";
+                AssetManager assetManager = context.getAssets();
+                InputStream in = assetManager.open("pustak_data.txt");
+                InputStreamReader isr = new InputStreamReader(in);
+                char[] inputBuffer = new char[100];
+
+                int charRead;
+                while ((charRead = isr.read(inputBuffer)) > 0) {
+                    String readString = String.copyValueOf(inputBuffer, 0, charRead);
+                    str += readString;
+                }
+            } catch (Exception ioe) {
+                ioe.printStackTrace();
+            }
+            onSave(context,str);
         }
 
         return str;
@@ -116,5 +145,6 @@ public class CommonMethods {
         double y = Math.pow(dm.heightPixels/dm.ydpi,2);
          SCREEN_SIZE_INCHES = Math.sqrt(x+y);
     }
+
 
 }
