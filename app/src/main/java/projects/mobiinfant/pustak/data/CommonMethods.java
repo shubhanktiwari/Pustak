@@ -68,7 +68,8 @@ public class CommonMethods {
                     INDEX_EPISODE.add(dataModel);
                     IMG_DESCRIPTIONS.add(dataModel);
                 }else {
-                   getStringPerPage(jsonObjectTemp.getString("descriptionStr"));
+
+                   getStringPerPage(jsonObjectTemp.getString("descriptionStr"),jsonObjectTemp.getString("imagPath"));
                 }
 
             }
@@ -76,7 +77,7 @@ public class CommonMethods {
             e.printStackTrace();
         }
     }
-    private static String getStringPerPage(String fullStr){
+    private static String getStringPerPage(String fullStr,String imagePath){
         DataModel dataModel = new DataModel();
         dataModel.setIsTitle(false);
         int tempStringLength = fullStr.length();
@@ -85,11 +86,13 @@ public class CommonMethods {
             while (index < fullStr.length()) {
                 dataModel = new DataModel();
                 dataModel.setIsTitle(false);
+                dataModel.setImagPath(imagePath);
                 dataModel.setDescriptionStr(fullStr.substring(index, Math.min(index + 1000,fullStr.length())));
                 IMG_DESCRIPTIONS.add(dataModel);
                 index += 1000;
             }
         }else{
+            dataModel.setImagPath(imagePath);
             dataModel.setDescriptionStr(fullStr);
             IMG_DESCRIPTIONS.add(dataModel);
         }
