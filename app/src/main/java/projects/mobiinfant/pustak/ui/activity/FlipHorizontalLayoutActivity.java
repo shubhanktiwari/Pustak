@@ -84,7 +84,10 @@ public class FlipHorizontalLayoutActivity extends Activity {
         }
         if (isSoundActive) {
           String editedTextReadable = android.text.Html.fromHtml(CommonMethods.IMG_DESCRIPTIONS.get(postionIndex).getDescriptionStr()).toString();
-          textToSpeech.speak(editedTextReadable, TextToSpeech.QUEUE_FLUSH, null);
+          editedTextReadable.replaceAll("|",".");
+          textToSpeech.setSpeechRate(0.8f);
+            textToSpeech.speak(editedTextReadable, TextToSpeech.QUEUE_FLUSH, null);
+
         } else {
           textToSpeech.stop();
         }
@@ -126,7 +129,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
   private class UpdatePage extends AsyncTask<String, String, String> {
 
     protected String doInBackground(String... urls) {
-      CommonMethods.setData(FlipHorizontalLayoutActivity.this);
+      //CommonMethods.setData(FlipHorizontalLayoutActivity.this);
       return "";
     }
     protected void onPostExecute(String result) {
@@ -195,12 +198,13 @@ public class FlipHorizontalLayoutActivity extends Activity {
   }
   @Override
   public void onDestroy() {
-    super.onDestroy();
+
     // Don't forget to shutdown tts!
     if (textToSpeech != null) {
       textToSpeech.stop();
       textToSpeech.shutdown();
     }
+    super.onDestroy();
 
   }
 

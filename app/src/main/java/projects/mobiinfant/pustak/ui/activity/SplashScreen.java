@@ -2,6 +2,7 @@ package projects.mobiinfant.pustak.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
@@ -11,7 +12,6 @@ import projects.mobiinfant.pustak.R;
 import projects.mobiinfant.pustak.data.CommonMethods;
 
 public class SplashScreen extends Activity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,12 +26,19 @@ public class SplashScreen extends Activity {
                     public void run() {
                         Thread t = new Thread(new Runnable() {
                             public void run() {
+
+                                AsyncTask.execute(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        CommonMethods.setData(SplashScreen.this);
+                                    }
+                                });
                                 onLaunchHomeActivity();
                             }
                         });
                         t.start();
                     }
-                }, 3000);
+                }, 2000);
             }
     }
     private void onLaunchHomeActivity(){

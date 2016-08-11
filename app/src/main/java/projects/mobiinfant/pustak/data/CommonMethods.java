@@ -14,68 +14,34 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.List;
 
 import projects.mobiinfant.pustak.adapter.DataModel;
+import projects.mobiinfant.pustak.ui.activity.SplashScreen;
 
 public class CommonMethods {
 
   public static  List<DataModel> IMG_DESCRIPTIONS = new ArrayList<DataModel>();
     public static  List<DataModel> INDEX_EPISODE = new ArrayList<DataModel>();
     public static double SCREEN_SIZE_INCHES = 0;
-
     public static final String PREFS_NAME = "AOP_PREFS";
-    public static final String PREFS_KEY = "AOP_PREFS_String";
     public static final String PREFS_KEY_INDEX = "AOP_PREFS_Index";
     public static final String PREFS_KEY_EP_INDEX = "AOP_PREFS_EP_Index";
-    public static void onSave(Context context, String text) {
-        SharedPreferences settings;
-        SharedPreferences.Editor editor;
-        settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE); //1
-        editor = settings.edit(); //2
 
-        editor.putString(PREFS_KEY, text); //3
-        editor.commit(); //4
-    }
-    public static String getValue(Context context) {
-        SharedPreferences settings;
-        String text = "";
-        try {
-            settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE); //1
-            text = settings.getString(PREFS_KEY, ""); //2
-        }catch (Exception e){
-            System.out.print(e.getMessage());
-        }
-        return text;
-    }
     private static String getJSONString(Context context)
     {
-        String str = getValue(context);
+        String str = "";
         try {
-            str = str.replaceAll("\\n+", "");
-            str = str.replaceAll("\\t+", "");
-        }catch (Exception e){
-            str="";
-        }
-        if(!(str.length() > 0)) {
-            try {
                 str="";
                 AssetManager assetManager = context.getAssets();
                 InputStream in = assetManager.open("pustak_data.txt");
-                InputStreamReader isr = new InputStreamReader(in);
-                char[] inputBuffer = new char[100];
-
-                int charRead;
-                while ((charRead = isr.read(inputBuffer)) > 0) {
-                    String readString = String.copyValueOf(inputBuffer, 0, charRead);
-                    str += readString;
-                }
+                str = readFromStandardNIO(in);
             } catch (Exception ioe) {
                 ioe.printStackTrace();
             }
-            onSave(context,str);
-        }
 
         return str;
     }
@@ -176,6 +142,17 @@ public class CommonMethods {
             System.out.print(e.getMessage());
         }
         return text;
+    }
+    public static String readFromStandardNIO(InputStream inputStream) {
+        java.nio.ByteBuffer buffer = java.nio.ByteBuffer.allocate(20480000);
+        try {
+            ReadableByteChannel channel = Channels.newChannel(inputStream);
+            channel.read(buffer);
+            channel.close();
+        } catch (Exception e) {
+
+        }
+        return new String(buffer.array());
     }
 
 }
