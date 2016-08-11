@@ -78,7 +78,7 @@ public class CommonMethods {
         DataModel dataModel = new DataModel();
         dataModel.setIsTitle(false);
         int tempStringLength = fullStr.length();
-        if(tempStringLength > 1000){
+       /* if(tempStringLength > 1000){
             int index = 0;
             while (index < fullStr.length()) {
                 dataModel = new DataModel();
@@ -88,11 +88,11 @@ public class CommonMethods {
                 IMG_DESCRIPTIONS.add(dataModel);
                 index += 1000;
             }
-        }else{
+        }else{*/
             dataModel.setImagPath(imagePath);
             dataModel.setDescriptionStr(fullStr);
             IMG_DESCRIPTIONS.add(dataModel);
-        }
+        //}
 
 
 
