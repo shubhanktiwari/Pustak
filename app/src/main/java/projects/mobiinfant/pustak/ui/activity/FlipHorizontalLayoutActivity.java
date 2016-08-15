@@ -279,7 +279,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
 
     private void onBack(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("do you want to leave?");
+        builder.setMessage("क्या आप बहार जाना चाहते है ?");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -305,7 +305,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
                 String editedTextReadable = android.text.Html.fromHtml(StorySubListActivity.INDEX_EPISODE_SELECTED.getListDesc().get(selectedIndex).getDescriptionStr()).toString();
                 onSpeakingSetting(editedTextReadable);
             }
-            textViewPageNumber.setText(getResources().getString(R.string.page) + (selectedIndex) + "/" + (StorySubListActivity.INDEX_EPISODE_SELECTED.getListDesc().size()-1));
+            textViewPageNumber.setText(getResources().getString(R.string.page)+" " + (selectedIndex) + "/" + (StorySubListActivity.INDEX_EPISODE_SELECTED.getListDesc().size()-1));
 
             CommonMethods.onSetIndex(getApplicationContext(), flipView.getSelectedItemPosition(), StorySubListActivity.INDEX_EPISODE_SELECTED.getIndex());
 
