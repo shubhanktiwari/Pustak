@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+android:background="@drawable/bg_action"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -9,31 +10,47 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_gravity="right"
-        android:background="@drawable/bg_action"
+        android:background="@drawable/pageheader"
         android:gravity="right"
+        android:layout_marginBottom="5dp"
         android:layout_height="40dp">
-        <Spinner
-            android:id="@+id/episode_spinner_id"
-            android:layout_width="0dp"
-            android:layout_weight="0.70"
+        <ImageView
+            android:id="@+id/back_icon_id"
+            android:layout_width="30dp"
+            android:src="@drawable/back_icon"
+            android:layout_gravity="left|center"
+            android:gravity="left|center"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/page_Title_id"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_gravity="right|center"
-            android:gravity="right|center"
-            android:layout_height="38dp"></Spinner>
+            android:gravity="left|center"
+            android:text="wdwd"
+            android:textSize="20sp"
+            android:layout_height="fill_parent"
+            android:textColor="@color/black"
+            />
         <TextView
             android:id="@+id/page_number_id"
             android:layout_width="0dp"
-            android:layout_weight="0.15"
+            android:layout_weight="0.20"
             android:layout_marginRight="5dp"
             android:layout_gravity="right|center"
             android:gravity="right|center"
-            android:layout_height="32dp"
+            android:text="dfsf"
+            android:textSize="16sp"
+            android:layout_height="fill_parent"
+            android:textColor="@color/black"
             />
         <ImageView
             android:id="@+id/sound_id"
             android:layout_width="32dp"
-            android:layout_marginRight="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:text="Sound"
-            android:src="@android:drawable/ic_btn_speak_now"
+            android:src="@drawable/speak_on"
             android:layout_gravity="right|center"
             android:gravity="right|center"
             android:layout_height="32dp" />
@@ -43,17 +60,18 @@
         android:id="@+id/content_id"
         android:layout_width="match_parent"
         android:orientation="vertical"
+        android:background="@android:color/transparent"
        android:layout_height="match_parent"
-        android:layout_below="@id/header_id"
-        android:layout_above="@+id/footer_id">
+        android:layout_below="@id/header_id">
+
     </LinearLayout>
 
-    <LinearLayout
+   <!-- <LinearLayout
         android:id="@+id/footer_id"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:background="@drawable/bg_action"
         android:layout_height="10dp"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"/>-->
 
 </RelativeLayout>

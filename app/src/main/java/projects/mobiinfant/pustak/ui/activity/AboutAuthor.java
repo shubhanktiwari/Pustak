@@ -20,13 +20,13 @@ public class AboutAuthor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_author);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
         Button btnStart = (Button)findViewById(R.id.startbook);
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Intent intent = new Intent(AboutAuthor.this, FlipHorizontalLayoutActivity.class);
+                    Intent intent = new Intent(AboutAuthor.this, StorySubListActivity.class);
                     startActivity(intent);
 
 

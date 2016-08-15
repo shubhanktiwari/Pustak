@@ -3,18 +3,25 @@
 package projects.mobiinfant.pustak.ui.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.speech.tts.Voice;
+import android.text.InputType;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -24,9 +31,11 @@ import android.widget.Toast;
 import com.aphidmobile.flip.FlipViewController;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import projects.mobiinfant.pustak.R;
 import projects.mobiinfant.pustak.adapter.PustakAdapter;
@@ -38,12 +47,10 @@ public class FlipHorizontalLayoutActivity extends Activity {
   private TextToSpeech textToSpeech;
   public LinearLayout linearLayoutContent;
   private ImageView imageViewSound;
-  private int postionIndex = 0;
   private boolean isSoundActive = false;
-  private TextView textViewPageNumber;
-  private Spinner episode_spinner;
+  private TextView textViewPageNumber,textViewTitle;
   private  PustakAdapter pustakAdapter;
-  private int episodeIndex= 0;
+    private ImageView backImg;
 
   /**
    * Called when the activity is first created.
@@ -51,62 +58,48 @@ public class FlipHorizontalLayoutActivity extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    setTitle("PUSTAK");
+      getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+      setTitle("RAMAYANA CG");
     setContentView(R.layout.main_activity);
     linearLayoutContent = (LinearLayout) findViewById(R.id.content_id);
     imageViewSound = (ImageView)findViewById(R.id.sound_id);
     textViewPageNumber =(TextView)findViewById(R.id.page_number_id);
-    episode_spinner = (Spinner)findViewById(R.id.episode_spinner_id);
-    episode_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-      @Override
-      public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-       flipView.setSelection(CommonMethods.INDEX_EPISODE.get(position).getIndexPostion());
-        episodeIndex = position;
-      }
-
-      @Override
-      public void onNothingSelected(AdapterView<?> parentView) {
-        // your code here
-      }
-
-    });
-   // postionIndex= CommonMethods.getIndex(getApplicationContext());
-    episodeIndex = CommonMethods.getEPIndex(getApplicationContext());
-    new UpdatePage().execute("");
+      backImg = (ImageView)findViewById(R.id.back_icon_id);
+      textViewTitle =(TextView)findViewById(R.id.page_Title_id);
+      textViewTitle.setText(getResources().getString(R.string.aadhya)+":  "+StorySubListActivity.INDEX_EPISODE_SELECTED.getListDesc().get(0).getTitle());
+      UpdatePage();
     imageViewSound.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (isSoundActive) {
-          isSoundActive = false;
-        } else {
-          isSoundActive = true;
-        }
-        if (isSoundActive) {
-          String editedTextReadable = android.text.Html.fromHtml(CommonMethods.IMG_DESCRIPTIONS.get(postionIndex).getDescriptionStr()).toString();
-          editedTextReadable.replaceAll("|",".");
-          textToSpeech.setSpeechRate(0.8f);
-            textToSpeech.speak(editedTextReadable, TextToSpeech.QUEUE_FLUSH, null);
+        @Override
+        public void onClick(View v) {
+            if (isSoundActive) {
+                isSoundActive = false;
+            } else {
+                isSoundActive = true;
+            }
+            if (isSoundActive) {
+                String editedTextReadable = android.text.Html.fromHtml(StorySubListActivity.INDEX_EPISODE_SELECTED.getListDesc().get(flipView.getSelectedItemPosition()).getDescriptionStr()).toString();
 
-        } else {
-          textToSpeech.stop();
+                onSpeakingSetting(editedTextReadable);
+                imageViewSound.setImageResource(R.drawable.speak_off);
+
+            } else {
+                textToSpeech.stop();
+                imageViewSound.setImageResource(R.drawable.speak_on);
+            }
         }
-      }
     });
-
-  }
-
-  private void setSpinner(){
-    List<String> categories = new ArrayList<String>();
-    for (int i=0;i< CommonMethods.INDEX_EPISODE.size(); i++){
-      categories.add(CommonMethods.INDEX_EPISODE.get(i).getTitle());
-    }
-    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
-    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    episode_spinner.setAdapter(dataAdapter);
-    episode_spinner.setSelection(episodeIndex);
-   // flipView.setSelection(postionIndex);
-
+      backImg.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              onBack();
+          }
+      });
+      textViewPageNumber.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              onShowPagePopup();
+          }
+      });
 
   }
 
@@ -126,23 +119,22 @@ public class FlipHorizontalLayoutActivity extends Activity {
     if(flipView !=null)
     flipView.onPause();
   }
-  private class UpdatePage extends AsyncTask<String, String, String> {
-
-    protected String doInBackground(String... urls) {
-      //CommonMethods.setData(FlipHorizontalLayoutActivity.this);
-      return "";
-    }
-    protected void onPostExecute(String result) {
+  private void UpdatePage() {
       flipView = new FlipViewController(FlipHorizontalLayoutActivity.this, FlipViewController.HORIZONTAL);
       pustakAdapter = new PustakAdapter(FlipHorizontalLayoutActivity.this);
       flipView.setAdapter(pustakAdapter);
       linearLayoutContent.addView(flipView);
-      textViewPageNumber.setText("Page:" + (postionIndex + 1) + "/" + CommonMethods.IMG_DESCRIPTIONS.size());
-      CommonMethods.onSetIndex(getApplicationContext(), postionIndex, episodeIndex);
       speakText();
       setFlipsListner();
-      setSpinner();
-    }
+
+      if(CommonMethods.getIndex(this) > 0){
+         onGoPage(CommonMethods.getIndex(this));
+      }else{
+          onGoPage(0);
+      }
+      CommonMethods.onSetIndex(getApplicationContext(), flipView.getSelectedItemPosition(), StorySubListActivity.INDEX_EPISODE_SELECTED.getIndex());
+
+
   }
   private void hideNavBar() {
     if (Build.VERSION.SDK_INT >= 19) {
@@ -159,16 +151,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
     flipView.setOnViewFlipListener(new FlipViewController.ViewFlipListener() {
       @Override
       public void onViewFlipped(View view, int position) {
-        if(textToSpeech.isSpeaking()){
-          textToSpeech.stop();
-        }
-        if(isSoundActive) {
-          String editedTextReadable = android.text.Html.fromHtml(CommonMethods.IMG_DESCRIPTIONS.get(position).getDescriptionStr()).toString();
-          textToSpeech.speak(editedTextReadable, TextToSpeech.QUEUE_FLUSH, null);
-        }
-        postionIndex = position;
-        textViewPageNumber.setText("Page:"+(postionIndex+1)+"/"+CommonMethods.IMG_DESCRIPTIONS.size());
-        CommonMethods.onSetIndex(getApplicationContext(),postionIndex,episodeIndex);
+             onGoPage(position);
       }
     });
   }
@@ -208,4 +191,124 @@ public class FlipHorizontalLayoutActivity extends Activity {
 
   }
 
+    private void onSpeakingSetting(String stringText){
+       // stringText =   stringText.replaceAll("||", "|");
+
+        HashMap<String, String> myHashAlarm = new HashMap();
+
+        final  String[] stringArray = stringText.split("[|]");
+        speakinkTotalIndex = stringArray.length-1;
+        textToSpeech.setOnUtteranceProgressListener(utteranceProgressListener);
+        myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_STREAM,
+                String.valueOf(AudioManager.STREAM_ALARM));
+        textToSpeech.setSpeechRate(0.75f);
+        myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "ID0");
+        textToSpeech.speak(stringArray[0], TextToSpeech.QUEUE_FLUSH, myHashAlarm);
+
+        for (int i=1;i<stringArray.length;i++){
+            myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID,"ID"+i);
+            textToSpeech.speak(stringArray[i], TextToSpeech.QUEUE_ADD, myHashAlarm);
+        }
+
+    }
+    private int  speakinkTotalIndex = 0;
+    UtteranceProgressListener utteranceProgressListener=new UtteranceProgressListener() {
+
+        @Override
+        public void onStart(String utteranceId) {
+            Log.d("ppp", "onStart ( utteranceId :"+utteranceId+" ) ");
+        }
+
+        @Override
+        public void onError(String utteranceId) {
+            Log.d("ppp", "onError ( utteranceId :"+utteranceId+" ) ");
+        }
+
+        @Override
+        public void onDone(String utteranceId) {
+            if(("ID"+speakinkTotalIndex).equalsIgnoreCase(utteranceId)){
+                final int selectedIndex= flipView.getSelectedItemPosition() + 1;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("Sound",""+selectedIndex+"   "+flipView.getCount());
+                        if((selectedIndex)<StorySubListActivity.INDEX_EPISODE_SELECTED.getListDesc().size()) {
+                           onGoPage(selectedIndex);
+                        }else{
+                            textToSpeech.stop();
+                        }
+                    }
+                });
+
+
+            }
+        }
+    };
+
+    private  void onShowPagePopup(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+       // builder.setTitle("Title");
+
+// Set up the input
+        final EditText input = new EditText(this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_NUMBER );
+        input.setHint("0-" + (StorySubListActivity.INDEX_EPISODE_SELECTED.getListDesc().size() - 1)+" number Allow!");
+        builder.setView(input);
+
+// Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                try {
+                    int selectedIndex = Integer.parseInt(input.getText().toString());
+                    onGoPage(selectedIndex);
+                }catch (Exception e){}
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                CommonMethods.onSetIndex(getApplicationContext(),-1,-1);
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void onBack(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("do you want to leave?");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onBackPressed();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+    private void onGoPage(int selectedIndex){
+        if((selectedIndex)<StorySubListActivity.INDEX_EPISODE_SELECTED.getListDesc().size()) {
+            flipView.setSelection(selectedIndex);
+            if (textToSpeech.isSpeaking()) {
+                textToSpeech.stop();
+            }
+            if (isSoundActive) {
+                String editedTextReadable = android.text.Html.fromHtml(StorySubListActivity.INDEX_EPISODE_SELECTED.getListDesc().get(selectedIndex).getDescriptionStr()).toString();
+                onSpeakingSetting(editedTextReadable);
+            }
+            textViewPageNumber.setText(getResources().getString(R.string.page) + (selectedIndex) + "/" + (StorySubListActivity.INDEX_EPISODE_SELECTED.getListDesc().size()-1));
+
+            CommonMethods.onSetIndex(getApplicationContext(), flipView.getSelectedItemPosition(), StorySubListActivity.INDEX_EPISODE_SELECTED.getIndex());
+
+        }
+    }
 }

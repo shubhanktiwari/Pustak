@@ -21,6 +21,7 @@ import java.util.List;
 
 import projects.mobiinfant.pustak.R;
 import projects.mobiinfant.pustak.data.CommonMethods;
+import projects.mobiinfant.pustak.ui.activity.StorySubListActivity;
 
 public class PustakAdapter extends BaseAdapter {
 
@@ -34,7 +35,7 @@ public class PustakAdapter extends BaseAdapter {
   public PustakAdapter(Context context) {
     this.mContext = context;
     inflater = LayoutInflater.from(context);
-    travelData = new ArrayList<DataModel>(CommonMethods.IMG_DESCRIPTIONS);
+    travelData = new ArrayList<DataModel>(StorySubListActivity.INDEX_EPISODE_SELECTED.getListDesc());
   }
 
   @Override
