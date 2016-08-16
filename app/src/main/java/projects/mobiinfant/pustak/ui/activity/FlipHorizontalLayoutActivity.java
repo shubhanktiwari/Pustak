@@ -271,7 +271,6 @@ public class FlipHorizontalLayoutActivity extends Activity {
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                CommonMethods.onSetIndex(getApplicationContext(),-1,-1);
                 dialog.cancel();
             }
         });
@@ -290,6 +289,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                CommonMethods.onSetIndex(getApplicationContext(),-1,-1);
                 finish();
             }
         });
