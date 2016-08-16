@@ -58,7 +58,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-      getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+     // getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
       setTitle("RAMAYANA CG");
     setContentView(R.layout.main_activity);
     linearLayoutContent = (LinearLayout) findViewById(R.id.content_id);
@@ -78,7 +78,9 @@ public class FlipHorizontalLayoutActivity extends Activity {
             }
             if (isSoundActive) {
                 String editedTextReadable = android.text.Html.fromHtml(StorySubListActivity.INDEX_EPISODE_SELECTED.getListDesc().get(flipView.getSelectedItemPosition()).getDescriptionStr()).toString();
-
+                if(flipView.getSelectedItemPosition() == 0){
+                    editedTextReadable = getString(R.string.aadhya)+"  "+StorySubListActivity.INDEX_EPISODE_SELECTED.getListDesc().get(flipView.getSelectedItemPosition()).getTitle()+"   "+editedTextReadable;
+                }
                 onSpeakingSetting(editedTextReadable);
                 imageViewSound.setImageResource(R.drawable.speak_off);
 
@@ -201,7 +203,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
         textToSpeech.setOnUtteranceProgressListener(utteranceProgressListener);
         myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_STREAM,
                 String.valueOf(AudioManager.STREAM_ALARM));
-        textToSpeech.setSpeechRate(0.75f);
+        textToSpeech.setSpeechRate(0.70f);
         myHashAlarm.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "ID0");
         textToSpeech.speak(stringArray[0], TextToSpeech.QUEUE_FLUSH, myHashAlarm);
 
@@ -278,12 +280,17 @@ public class FlipHorizontalLayoutActivity extends Activity {
     }
 
     private void onBack(){
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("क्या आप बहार जाना चाहते है ?");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                onBackPressed();
+                finish();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -294,9 +301,11 @@ public class FlipHorizontalLayoutActivity extends Activity {
         });
 
         builder.show();
+
     }
+
     private void onGoPage(int selectedIndex){
-        if((selectedIndex)<StorySubListActivity.INDEX_EPISODE_SELECTED.getListDesc().size()) {
+        if((selectedIndex) < StorySubListActivity.INDEX_EPISODE_SELECTED.getListDesc().size()) {
             flipView.setSelection(selectedIndex);
             if (textToSpeech.isSpeaking()) {
                 textToSpeech.stop();
