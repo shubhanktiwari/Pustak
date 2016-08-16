@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:padding="5dp"
-
     android:id="@+id/list_layout_id"
-    android:layout_height="match_parent">
-
+    android:layout_height="70dp">
+<LinearLayout
+    android:layout_width="0dp"
+    android:orientation="vertical"
+    android:layout_weight="0.90"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_height="70dp">
     <TextView
         android:id="@+id/title_list_id"
         android:layout_width="match_parent"
@@ -13,6 +18,7 @@
         android:layout_marginLeft="20dp"
         android:paddingBottom="3dp"
         android:textStyle="bold"
+        android:text="ADADrf"
         android:textSize="20sp"
         android:textColor="@color/black"
         android:layout_height="wrap_content" />
@@ -24,7 +30,18 @@
         android:textSize="12sp"
         android:textColor="@color/black"
         android:layout_marginLeft="20dp"
+        android:text="efrwewetw"
         android:lines="2"
         android:layout_height="wrap_content" />
-
+</LinearLayout>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight=".10"
+        android:textSize="25sp"
+        android:text=">"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_gravity="left|center"
+        android:gravity="left|center"
+        android:layout_height="70dp"/>
 </LinearLayout>
