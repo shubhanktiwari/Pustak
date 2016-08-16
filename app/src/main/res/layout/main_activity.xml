@@ -16,7 +16,7 @@ android:background="@drawable/bg_action"
         android:layout_height="40dp">
         <ImageView
             android:id="@+id/back_icon_id"
-            android:layout_width="30dp"
+            android:layout_width="50dp"
             android:layout_marginLeft="5dp"
             android:src="@drawable/back_icon"
             android:layout_gravity="left|center"

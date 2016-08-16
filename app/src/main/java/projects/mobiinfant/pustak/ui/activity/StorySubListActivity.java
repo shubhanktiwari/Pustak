@@ -24,7 +24,7 @@ public class StorySubListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("RAMAYANA CG");
+      //  setTitle("RAMAYANA CG");
         setContentView(R.layout.storysub_list_activity);
         listView = (ListView)findViewById(R.id.substorylist_id);
         if(CommonMethods.INDEX_EPISODE !=null) {

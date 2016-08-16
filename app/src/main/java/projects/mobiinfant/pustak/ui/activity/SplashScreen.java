@@ -20,7 +20,6 @@ public class SplashScreen extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         CommonMethods.getScreenInches(this);
         setContentView(R.layout.activity_splash_screen);
-            {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -39,7 +38,6 @@ public class SplashScreen extends Activity {
                         t.start();
                     }
                 }, 2000);
-            }
     }
     private void onLaunchHomeActivity(){
 
