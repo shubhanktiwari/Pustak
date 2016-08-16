@@ -68,6 +68,7 @@ public class PustakAdapter extends BaseAdapter {
 
     final DataModel data = travelData.get(position % travelData.size());
       System.out.print(data.getImagPath()+"  "+data.getDescriptionStr() );
+
       if(data.getImagPath() !=null && data.getImagPath().length() > 0) {
           UI.<ImageView>findViewById(layout, R.id.photo).setImageResource(CommonMethods.getDrawable(mContext, data.getImagPath()));
 
