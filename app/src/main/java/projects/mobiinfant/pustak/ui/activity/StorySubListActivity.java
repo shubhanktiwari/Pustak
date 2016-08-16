@@ -55,6 +55,8 @@ public class StorySubListActivity extends Activity {
     }
     private void onSavedPage(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(R.drawable.logo);
+        builder.setTitle(getString(R.string.app_name));
         builder.setMessage("पुराना अध्याय, क्या आप जारी रखना चाहते हैं? "+getResources().getString(R.string.aadhya)+": " +CommonMethods.INDEX_EPISODE.get(CommonMethods.getEPIndex(getApplicationContext())).getListDesc().get(0).getTitle() +" , "+getResources().getString(R.string.page)+" "+CommonMethods.getIndex(this));
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
