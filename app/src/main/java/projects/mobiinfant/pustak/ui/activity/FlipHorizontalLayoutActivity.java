@@ -250,7 +250,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
     private  void onShowPagePopup(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(R.drawable.logo);
-        builder.setTitle(getString(R.string.app_name));
+        builder.setTitle(getString(R.string.app_name_hindi));
        // builder.setTitle("Title");
 
 // Set up the input
@@ -289,7 +289,7 @@ public class FlipHorizontalLayoutActivity extends Activity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("क्या आप बहार जाना चाहते है ?");
         builder.setIcon(R.drawable.logo);
-        builder.setTitle(getString(R.string.app_name));
+        builder.setTitle(getString(R.string.app_name_hindi));
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
